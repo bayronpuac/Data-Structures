@@ -26,9 +26,9 @@ class LRUCache:
     """
     def get(self, key):
         if key in self.storage:
-            entry = self.storage[key]
-            self.dll.move_to_end(entry)
-            return entry.value[1]
+            node = self.storage[key]
+            self.dll.move_to_end(node)
+            return node.value[1]
         else:
             return None
 
@@ -44,12 +44,12 @@ class LRUCache:
     """
     def set(self, key, value):
         if key in self.storage:
-            entry = self.storage[key]
-            entry.value = (key, value)
-            self.dll.move_to_end(entry)
+            node = self.storage[key]
+            node.value = (key, value)
+            self.dll.move_to_end(node)
             return
             
-        if self.size is self.limit:
+        if self.size == self.limit:
             del self.storage[self.dll.head.value[0]]
             self.dll.remove_from_head()
             self.size -= 1
